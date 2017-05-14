@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp" ng-controller="MovieController">
   <head>
-    <title></title>
+    <title ng-bind="'Best - ' + details.Title"></title>
     <!-- <link rel="stylesheet" href="css/animate.min.css"> -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    
 
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
   </head>
@@ -16,7 +17,9 @@
   <body>
     <div class="container-fluid outerdiv">
       <nav class="navbar navbar-inverse navbar-fixed-top">
-       
+        <div class="container-fluid">
+
+        </div>
           <div class="navbar-header">
             <a class="navbar-brand" href="#"><b>BEST</b> <span class="span-style">Movie Browser</span></a>
           </div>
@@ -67,13 +70,70 @@
   <br>
       <div class="animated zoomInRight">
         <div class="input-group search-bar">
-         <!--  <input type="text" ng-model="search" ng-model-options="{ debounce: 800 }" onclick="select()" class="form-control" placeholder="Search for..." autofocus />
-          <span class="input-group-addon bar-style"><i class="glyphicon glyphicon-search"></i></span> -->
+          <input type="text" ng-model="search" ng-model-options="{ debounce: 800 }" onclick="select()" class="form-control" placeholder="Search for..." autofocus />
+          <span class="input-group-addon bar-style"><i class="glyphicon glyphicon-search"></i></span>
         </div>
       </div>
 
 </center>
-    
+<br>
+<div>
+  <div ng-if="!details">
+  Loading results...
+</div>
+<div class="col-md-8">
+<div ng-if="details.Response==='True'" >
+<div class="col-md-8">
+  <img ng-src="{$ details.Poster=='N/A' ? 'http://placehold.it/150x220&text=N/A' : details.Poster $}" class="thumbnail animated flip movie-poster"> </div>
+  <div class="col-md-8">
+  <span class="span-outer">
+    <a href="http://imdb.com/title/{$ details.imdbID $}" target="_blank">{$ details.Title $}</a>
+  </span>, {$ details.Year $}
+
+  <p><strong>Released on:</strong> {$ details.Released $} ({$ details.Runtime $})</p>
+
+  <p>{$ details.Plot $}</p>
+
+  <p class="outer-p">
+    <div class="inner-p">
+      <span class="label label-primary">Directors :</span> {$ details.Director $}
     </div>
+    <div class="inner-p">
+      <span class="label label-primary">Actors :</span> {$ details.Actors $}
+    </div>
+    <div class="inner-p">
+      <span class="label label-primary">Genre :</span> {$ details.Genre $}
+    </div>
+  </p>
+
+  <p class="outer-p-2">Ratings:<br>
+    <strong>IMDb Rating</strong>: <span class="label label-success">{$ details.imdbRating $}</span><br>
+    <strong>Rotten Tomatoes</strong>: <span class="label label-success">{$ details.tomatoRating $}</span>
+  </p>
+
+  <p class="outer-p-3">
+    <a ng-href="https://www.youtube.com/results?search_query={{ details.Title }}" target="_blank" class="btn btn-default btn-xs btn-info">Watch Trailers!</a>
+    <span class="divider"></span>
+    <a ng-href="http://subscene.com/subtitles/title?q={{ details.Title }}" target="_blank" class="btn btn-default btn-xs btn-info">Get Subtitles!</a>
+    <span class="divider"></span>
+    <a ng-href="http://www.theost.com/search/custom/?key={{ details.Title }}" target="_blank" class="btn btn-default btn-xs btn-info">Hear Soundtracks!</a>
+    <span class="divider"></span>
+    <a ng-href="http://www.amazon.in/s/ref=nb_sb_noss_1?url=search-alias%3Ddvd&field-keywords={{ details.Title }}" target="_blank" class="btn btn-default btn-xs btn-info">Buy this movie!</a>
+  </p>
+</div>
+</div>
+</div>
+<div ng-if="details.Response==='False'">
+  No results found.
+</div>
+
+</div>
+
+  
+<script src="../../static/lib/jquery.js"></script>
+  <script src="../../static/lib/angular/angular.js"></script>
+  <script src="../../static/lib/angular-route/angular-route.js"></script>
+    <script src="../../static/main.js"></script>
+    <script src="../../static/app.js"></script>
   </body>
 </html>
